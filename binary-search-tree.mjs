@@ -6,7 +6,7 @@ class Tree {
     }
 
     buildTree(array, start = 0, end = array.length - 1) {
-        let midIndex = Math.floor((end + start) / 2);
+        let midIndex = start + Math.floor((end - start) / 2);
         let root = new Node();
 
         root.value = array[midIndex];
