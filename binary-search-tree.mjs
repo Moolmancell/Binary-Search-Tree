@@ -71,7 +71,3 @@ class Tree {
 let test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 console.log(test.find(1))
 test.printTree(test.root);
-
-function removeDuplicates(arr) {
-    return [...new Set(arr)];
-}
