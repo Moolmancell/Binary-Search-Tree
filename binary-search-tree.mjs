@@ -69,7 +69,6 @@ class Tree {
     }
 
     deleteItem(value, root = this.root) {
-        debugger
         if (root === null) {
             return null;
         }
@@ -86,7 +85,18 @@ class Tree {
             } else if (root.right === null) {
                 return root.left;
             } else {
+                function getSuccessor(curr) {
+                    debugger
+                    curr = curr.right;
+                    while (curr !== null && curr.left !== null) {
+                        curr = curr.left;
+                    }
+                    return curr;
+                }
 
+                let succ = getSuccessor(root);
+                root.value = succ.value;
+                root.right = this.deleteItem(succ.value, root.right);
             }
         }
         return root;
@@ -94,5 +104,5 @@ class Tree {
 }
 
 let test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-test.deleteItem(5)
+test.deleteItem(4)
 test.printTree(test.root);
