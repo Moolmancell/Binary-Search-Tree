@@ -2,8 +2,9 @@ import {Node} from "./node.mjs";
 
 class Tree {
     constructor(array) {
-        this.array = this.removeDuplicates(array);
+        this.array = this.removeDuplicates(array).sort(function(a, b){return a - b});;
         this.root = this.buildTree(this.array);
+        console.log(this.array)
     }
 
     removeDuplicates(arr) {
@@ -66,8 +67,32 @@ class Tree {
             return this.find(value, root.left);
         } 
     }
+
+    deleteItem(value, root = this.root) {
+        debugger
+        if (root === null) {
+            return null;
+        }
+
+        if (root.value > value) {
+            root.left = this.deleteItem(value, root.left);
+        } else if (root.value < value) {
+            root.right = this.deleteItem(value, root.right);
+        } else {
+            if (root.left === null && root.right === null) {
+                return null;
+            } else if (root.left === null) {
+                return root.right;
+            } else if (root.right === null) {
+                return root.left;
+            } else {
+
+            }
+        }
+        return root;
+    }
 }
 
 let test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-console.log(test.find(1))
+test.deleteItem(5)
 test.printTree(test.root);
