@@ -1,11 +1,14 @@
 import {Node} from "./node.mjs";
 
 class Tree {
-    constructor() {
-        this.root = null;
+    constructor(array) {
+        this.array = array;
+        this.root = this.buildTree(array);
     }
 
     buildTree(array, start = 0, end = array.length - 1) {
+        if (start > end) return null;
+
         let midIndex = start + Math.floor((end - start) / 2);
         let root = new Node();
 
@@ -22,16 +25,48 @@ class Tree {
             return;
           }
           if (node.right !== null) {
-            prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+            this.printTree(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
           }
-          console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+          console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.value}`);
           if (node.left !== null) {
-            prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+            this.printTree(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+        }
+    }
+
+    insert(value, root = this.root) {
+        if (value > root.value) {
+            if (root.right === null) {
+                root.right = new Node();
+                root.right.value = value;
+            } else {
+                this.insert(value, root.right);
+            }
+        } else {
+            if (root.left === null) {
+                root.left = new Node();
+                root.left.value = value;
+            } else {
+                this.insert(value, root.left);
+            }
+        }
+    }
+
+    find(value, root = this.root) {
+
+        if (root === null) {
+            return null
+        } else if (value === root.value) {
+            return root
+        } else if (this.find(value, root.left) === value) {
+            return root.left
+        } else if (this.find(value, root.right) === value) {
+            return root.right
+        } else {
+            return null
         }
     }
 }
 
-let test = new Tree();
-let array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-test.root = test.buildTree(array);
-//test.printTree(test.root);
+let test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+console.log(test.find(23))
+test.printTree(test.root);
