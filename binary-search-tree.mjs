@@ -2,8 +2,12 @@ import {Node} from "./node.mjs";
 
 class Tree {
     constructor(array) {
-        this.array = array;
-        this.root = this.buildTree(array);
+        this.array = this.removeDuplicates(array);
+        this.root = this.buildTree(this.array);
+    }
+
+    removeDuplicates(arr) {
+        return [...new Set(arr)];
     }
 
     buildTree(array, start = 0, end = array.length - 1) {
@@ -52,21 +56,22 @@ class Tree {
     }
 
     find(value, root = this.root) {
-
         if (root === null) {
-            return null
-        } else if (value === root.value) {
-            return root
-        } else if (this.find(value, root.left) === value) {
-            return root.left
-        } else if (this.find(value, root.right) === value) {
-            return root.right
+            return null;
+        } else if (root.value === value) {
+            return root;
+        } else if (value > root.value) {
+            return this.find(value, root.right);
         } else {
-            return null
-        }
+            return this.find(value, root.left);
+        } 
     }
 }
 
 let test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-console.log(test.find(23))
+console.log(test.find(1))
 test.printTree(test.root);
+
+function removeDuplicates(arr) {
+    return [...new Set(arr)];
+}
