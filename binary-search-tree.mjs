@@ -86,7 +86,6 @@ class Tree {
                 return root.left;
             } else {
                 function getSuccessor(curr) {
-                    debugger
                     curr = curr.right;
                     while (curr !== null && curr.left !== null) {
                         curr = curr.left;
