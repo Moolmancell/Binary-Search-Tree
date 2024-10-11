@@ -2,12 +2,12 @@ import {Node} from "./node.mjs";
 
 class Tree {
     constructor(array) {
-        this.array = this.removeDuplicates(array).sort(function(a, b){return a - b});;
+        this.array = this.#removeDuplicates(array).sort(function(a, b){return a - b});;
         this.root = this.buildTree(this.array);
         console.log(this.array)
     }
 
-    removeDuplicates(arr) {
+    #removeDuplicates(arr) {
         return [...new Set(arr)];
     }
 
@@ -99,6 +99,86 @@ class Tree {
             }
         }
         return root;
+    }
+
+    levelOrder(callback, root = this.root, queue = []) {
+        queue = [root]
+        while (queue.length > 0) {
+            callback(queue[0])
+            if (queue[0].left !== null) {
+                queue.push(queue[0].left);
+            }
+            if (queue[0].right !== null) {
+                queue.push(queue[0].right);
+            }
+            queue.shift();
+        }
+    }
+
+    inOrder(callback, root = this.root) {
+        if (root === null) return;
+
+        this.inOrder(callback, root.left);
+        callback(root);
+        this.inOrder(callback, root.right);
+    }
+
+    preOrder(callback, root = this.root) {
+        if (root === null) return;
+
+        callback(root);
+        this.preOrder(callback, root.left);
+        this.preOrder(callback, root.right);
+    }
+
+    postOrder(callback) {
+        if (root === null) return;
+
+        this.postOrder(callback, root.left);
+        this.postOrder(callback, root.right);
+        callback(root);
+    }
+
+    height(node, height = 0) {
+        if (node === null) {
+            return;
+        }
+
+        if (node.right !== null) {
+            return this.height(node.right, height + 1);
+        } else if (node.left !== null) {
+            return this.height(node.left, height + 1);
+        } else {
+            return height;
+        }
+    }
+
+    depth(node, root = this.root) {
+        if (root == null) return -1;
+
+        var dist = -1;
+
+        if ((root.value == x)|| 
+        
+            (dist = findDepth(root.left, x)) >= 0 || 
+            
+            (dist = findDepth(root.right, x)) >= 0)
+
+            return dist + 1;
+            
+        return dist;
+    }
+
+    isBalanced() {
+        return this.height(this.root) - this.depth(this.root) <= 1;
+    }
+
+    rebalance() {
+        let array = [];
+        this.inOrder((node) => {
+            array.push(node.value);
+        });
+        this.root = this.buildTree(array);
     }
 }
 
