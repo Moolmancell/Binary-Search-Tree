@@ -1,10 +1,9 @@
 import {Node} from "./node.mjs";
 
-class Tree {
+export class Tree {
     constructor(array) {
         this.array = this.#removeDuplicates(array).sort(function(a, b){return a - b});;
         this.root = this.buildTree(this.array);
-        console.log(this.array)
     }
 
     #removeDuplicates(arr) {
@@ -181,7 +180,3 @@ class Tree {
         this.root = this.buildTree(array);
     }
 }
-
-let test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-test.deleteItem(4)
-test.printTree(test.root);
